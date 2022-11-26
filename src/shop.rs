@@ -26,10 +26,24 @@ impl Shop {
     /// this store wins, FightResult::Loss if this store loses, and a
     /// FightResult::Tie if both stores win the same number of battles.
     pub fn fight_store(&self, other: &Shop) -> FightResult {
-        todo!()
+        let zipped: i32 = self
+            .cards
+            .iter()
+            .zip(&other.cards)
+            .map(|(x, y)| x.fight(y))
+            .map(|x| match x {
+                FightResult::Win => 1,
+                FightResult::Loss => -1,
+                _ => 0,
+            })
+            .sum();
+        match zipped {
+            1.. => FightResult::Win,
+            0 => FightResult::Tie,
+            _ => FightResult::Loss,
+        }
     }
 }
-
 // Implement the Display trait for Shop so that it can be printed. Print the
 // shop's stats, including the most expensive card, the total damage, and the
 // total health.
