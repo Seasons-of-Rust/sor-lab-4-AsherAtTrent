@@ -38,13 +38,12 @@ impl Shop {
             })
             .sum();
         match zipped {
-            zipped if zipped > 0 => FightResult::Win,
-            zipped if zipped < 0 => FightResult::Loss,
-            _ => FightResult::Tie,
+            1.. => FightResult::Win,
+            0 => FightResult::Tie,
+            _ => FightResult::Loss,
         }
     }
 }
-
 // Implement the Display trait for Shop so that it can be printed. Print the
 // shop's stats, including the most expensive card, the total damage, and the
 // total health.
