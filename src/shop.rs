@@ -9,50 +9,39 @@ pub struct Shop {
 impl Shop {
     /// Get the price of the most expensive card in the shop
     pub fn most_expensive(&self) -> u32 {
-        self.cards
-        .iter()
-        .map(|card| card.price)
-        .max()
-        .unwrap()
+        self.cards.iter().map(|card| card.price).max().unwrap()
     }
 
     /// Get the total damage of all cards in the shop
     pub fn total_damage(&self) -> u32 {
-        self.cards
-        .iter()
-        .map(|card| card.damage)
-        .sum()
+        self.cards.iter().map(|card| card.damage).sum()
     }
 
     /// Get the total health of all cards in the shop
     pub fn total_health(&self) -> u32 {
-        self.cards
-        .iter()
-        .map(|card| card.health)
-        .sum()
+        self.cards.iter().map(|card| card.health).sum()
     }
 
     /// Simulate a fight against another store. Returns a FightResult::Win if
     /// this store wins, FightResult::Loss if this store loses, and a
     /// FightResult::Tie if both stores win the same number of battles.
     pub fn fight_store(&self, other: &Shop) -> FightResult {
-        let  zipped: i32 = 
-        self.cards
-        .iter()
-        .zip(&other.cards)
-        .map(|(x,y)| x.fight(y))
-        .map(|x| match x {
-            FightResult::Win => 1,
-            FightResult::Loss => -1,
-            _ => 0,
-        } )
-        .sum();
+        let zipped: i32 = self
+            .cards
+            .iter()
+            .zip(&other.cards)
+            .map(|(x, y)| x.fight(y))
+            .map(|x| match x {
+                FightResult::Win => 1,
+                FightResult::Loss => -1,
+                _ => 0,
+            })
+            .sum();
         match zipped {
-            zipped if zipped>0 => FightResult::Win,
-            zipped if zipped<0 => FightResult::Loss,
+            zipped if zipped > 0 => FightResult::Win,
+            zipped if zipped < 0 => FightResult::Loss,
             _ => FightResult::Tie,
         }
-        
     }
 }
 
